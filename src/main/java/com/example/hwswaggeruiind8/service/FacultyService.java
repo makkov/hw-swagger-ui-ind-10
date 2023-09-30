@@ -1,19 +1,24 @@
 package com.example.hwswaggeruiind8.service;
 
 import com.example.hwswaggeruiind8.enitity.Faculty;
+import com.example.hwswaggeruiind8.enitity.Student;
 import com.example.hwswaggeruiind8.repository.FacultyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
 
     private final FacultyRepository facultyRepository;
+    private final StudentService studentService;
 
-    public FacultyService(FacultyRepository facultyRepository) {
+    public FacultyService(FacultyRepository facultyRepository, StudentService studentService) {
         this.facultyRepository = facultyRepository;
+        this.studentService = studentService;
     }
 
     public Faculty add(String name, String color) {
@@ -43,5 +48,16 @@ public class FacultyService {
         return facultyRepository.findAll().stream()
                 .filter(faculty -> faculty.getColor().equals(color))
                 .collect(Collectors.toList());
+    }
+
+    public Set<Faculty> getByColorOrNameIgnoreCase(String param) {
+        Set<Faculty> result = new HashSet<>();
+        result.addAll(facultyRepository.findByColorIgnoreCase(param));
+        result.addAll(facultyRepository.findByNameIgnoreCase(param));
+        return result;
+    }
+
+    public List<Student> getStudentsByFacultyId(Long id) {
+        return studentService.getByFacultyId(id);
     }
 }

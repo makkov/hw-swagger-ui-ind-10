@@ -1,5 +1,6 @@
 package com.example.hwswaggeruiind8.service;
 
+import com.example.hwswaggeruiind8.enitity.Faculty;
 import com.example.hwswaggeruiind8.enitity.Student;
 import com.example.hwswaggeruiind8.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,17 @@ public class StudentService {
         return studentRepository.findAll().stream()
                 .filter(student -> student.getAge() == age)
                 .collect(Collectors.toList());
+    }
+
+    public List<Student> getByAgeBetween(int min, int max) {
+        return studentRepository.findAllByAgeBetween(min, max);
+    }
+
+    public Faculty getFacultyByStudentId(Long id) {
+        return studentRepository.findById(id).get().getFaculty();
+    }
+
+    public List<Student> getByFacultyId(Long facultyId) {
+        return studentRepository.findByFacultyId(facultyId);
     }
 }

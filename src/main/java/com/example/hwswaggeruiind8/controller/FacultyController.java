@@ -1,10 +1,12 @@
 package com.example.hwswaggeruiind8.controller;
 
 import com.example.hwswaggeruiind8.enitity.Faculty;
+import com.example.hwswaggeruiind8.enitity.Student;
 import com.example.hwswaggeruiind8.service.FacultyService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/faculty")
@@ -39,5 +41,15 @@ public class FacultyController {
     @GetMapping("/by-color")
     public List<Faculty> getByColor(@RequestParam String color) {
         return facultyService.getByColor(color);
+    }
+
+    @GetMapping("/by-name-or-color")
+    public Set<Faculty> getByColorOrNameIgnoreCase(@RequestParam String param) {
+        return facultyService.getByColorOrNameIgnoreCase(param);
+    }
+
+    @GetMapping("/students-by-faculty-id")
+    public List<Student> getStudentsByFacultyId(@RequestParam Long id) {
+        return facultyService.getStudentsByFacultyId(id);
     }
 }
