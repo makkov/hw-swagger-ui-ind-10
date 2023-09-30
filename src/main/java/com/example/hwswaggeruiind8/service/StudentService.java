@@ -1,45 +1,46 @@
 package com.example.hwswaggeruiind8.service;
 
-import com.example.hwswaggeruiind8.model.Student;
+import com.example.hwswaggeruiind8.enitity.Student;
+import com.example.hwswaggeruiind8.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
 
-    private static long COUNTER = 0;
+    private final StudentRepository studentRepository;
 
-    private final Map<Long, Student> studentById = new HashMap<>();
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     public Student add(String name, int age) {
-        Student newStudent = new Student(++COUNTER, name, age);
-        studentById.put(newStudent.getId(), newStudent);
+        Student newStudent = new Student(name, age);
+        newStudent = studentRepository.save(newStudent);
         return newStudent;
     }
 
     public Student get(long id) {
-        return studentById.get(id);
+        return studentRepository.findById(id).get();
     }
 
     public Student update(long id, String name, int age) {
-        Student studentForUpdate = studentById.get(id);
+        Student studentForUpdate = studentRepository.findById(id).get();
         studentForUpdate.setName(name);
         studentForUpdate.setAge(age);
-        return studentForUpdate;
+        return studentRepository.save(studentForUpdate);
     }
 
     public Student delete(long id) {
-        Student studentForDelete = studentById.get(id);
-        studentById.remove(id);
+        Student studentForDelete = studentRepository.findById(id).get();
+        studentRepository.deleteById(id);
         return studentForDelete;
     }
 
     public List<Student> getByAge(int age) {
-        return studentById.values().stream()
+        return studentRepository.findAll().stream()
                 .filter(student -> student.getAge() == age)
                 .collect(Collectors.toList());
     }

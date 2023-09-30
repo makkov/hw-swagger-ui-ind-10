@@ -1,6 +1,6 @@
 package com.example.hwswaggeruiind8.controller;
 
-import com.example.hwswaggeruiind8.model.Student;
+import com.example.hwswaggeruiind8.enitity.Student;
 import com.example.hwswaggeruiind8.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
