@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
@@ -22,5 +23,15 @@ public class AvatarController {
     public ResponseEntity<String> uploadAvatar(@PathVariable Long studentId, @RequestParam MultipartFile avatar) throws IOException {
         avatarService.uploadAvatar(studentId, avatar);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/student/{id}/avatar-from-db")
+    public ResponseEntity<byte[]> downloadAvatarFromDb(@PathVariable Long id) {
+        return avatarService.downloadAvatarByStudentFromDb(id);
+    }
+
+    @GetMapping(value = "/student/{id}/avatar-from-file")
+    public void downloadAvatarFromFileSystem(@PathVariable Long id, HttpServletResponse response) throws IOException{
+        avatarService.downloadAvatarFromFileSystem(id, response);
     }
 }

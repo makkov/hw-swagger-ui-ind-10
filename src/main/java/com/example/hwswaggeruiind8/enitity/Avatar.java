@@ -1,7 +1,6 @@
 package com.example.hwswaggeruiind8.enitity;
 
 import javax.persistence.*;
-
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -22,6 +21,11 @@ public class Avatar {
 
     @Lob
     private byte[] data;
+    @OneToOne
+    private Student student;
+
+    public Avatar() {
+    }
 
     public Long getId() {
         return id;
@@ -69,12 +73,6 @@ public class Avatar {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    @OneToOne
-    private Student student;
-
-    public Avatar() {
     }
 
     @Override
