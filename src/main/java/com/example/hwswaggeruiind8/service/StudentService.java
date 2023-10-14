@@ -6,6 +6,7 @@ import com.example.hwswaggeruiind8.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,8 +24,8 @@ public class StudentService {
         return newStudent;
     }
 
-    public Student get(long id) {
-        return studentRepository.findById(id).get();
+    public Optional<Student> get(long id) {
+        return studentRepository.findById(id);
     }
 
     public Student update(long id, String name, int age) {

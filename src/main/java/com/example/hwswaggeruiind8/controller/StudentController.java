@@ -6,6 +6,7 @@ import com.example.hwswaggeruiind8.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
@@ -23,7 +24,7 @@ public class StudentController {
     }
 
     @GetMapping
-    public Student get(@RequestParam long id) {
+    public Optional<Student> get(@RequestParam long id) {
         return studentService.get(id);
     }
 
