@@ -5,6 +5,8 @@ import com.example.hwswaggeruiind8.enitity.Student;
 import com.example.hwswaggeruiind8.repository.AvatarRepository;
 import com.example.hwswaggeruiind8.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,7 @@ import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
@@ -103,5 +106,9 @@ public class AvatarService {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+
+    public Page<Avatar> getWithPageable(int page, int count) {
+        return avatarRepository.findAll(PageRequest.of(page, count));
     }
 }

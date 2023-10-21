@@ -1,5 +1,7 @@
 package com.example.hwswaggeruiind8.enitity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
@@ -20,6 +22,7 @@ public class Avatar {
     private String mediaType;
 
     @Lob
+    @JsonIgnore
     private byte[] data;
     @OneToOne
     private Student student;

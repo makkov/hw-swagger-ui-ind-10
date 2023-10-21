@@ -1,5 +1,6 @@
 package com.example.hwswaggeruiind8.controller;
 
+import com.example.hwswaggeruiind8.enitity.Avatar;
 import com.example.hwswaggeruiind8.enitity.Faculty;
 import com.example.hwswaggeruiind8.enitity.Student;
 import com.example.hwswaggeruiind8.service.StudentService;
@@ -51,5 +52,20 @@ public class StudentController {
     @GetMapping("/faculty-by-student-id")
     public Faculty getFacultyByStudentId(@RequestParam Long id) {
         return studentService.getFacultyByStudentId(id);
+    }
+
+    @GetMapping("/count")
+    public Integer getCount() {
+        return studentService.getCount();
+    }
+
+    @GetMapping("/avg-age")
+    public Double getAvgAge() {
+        return studentService.getAvgAge();
+    }
+
+    @GetMapping("/last-five")
+    public List<Student> getLastFive() {
+        return studentService.getLastFive();
     }
 }
