@@ -4,6 +4,8 @@ import com.example.hwswaggeruiind8.enitity.Avatar;
 import com.example.hwswaggeruiind8.enitity.Student;
 import com.example.hwswaggeruiind8.repository.AvatarRepository;
 import com.example.hwswaggeruiind8.repository.StudentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +21,6 @@ import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
@@ -27,6 +28,8 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarService {
+
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
@@ -43,6 +46,7 @@ public class AvatarService {
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Был вызван метод uploadAvatar");
         Student student = studentRepository.getById(studentId);
         // строчка ниже работает для MacOs. заменить для Windows: Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
         Path filePath = Path.of(new File("").getAbsolutePath() + avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
@@ -73,7 +77,7 @@ public class AvatarService {
     }
 
     public ResponseEntity<byte[]> downloadAvatarByStudentFromDb(Long studentId) {
-
+        logger.info("Был вызван метод downloadAvatarByStudentFromDb");
         Optional<Avatar> avatarOpt = avatarRepository.findByStudentId(studentId);
 
         if (avatarOpt.isEmpty()) {
@@ -89,7 +93,7 @@ public class AvatarService {
     }
 
     public void downloadAvatarFromFileSystem(Long studentId, HttpServletResponse response) throws IOException {
-
+        logger.info("Был вызван метод downloadAvatarFromFileSystem");
         Optional<Avatar> avatarOpt = avatarRepository.findByStudentId(studentId);
 
         if (avatarOpt.isEmpty()) {
@@ -109,6 +113,7 @@ public class AvatarService {
     }
 
     public Page<Avatar> getWithPageable(int page, int count) {
+        logger.info("Был вызван метод getWithPageable");
         return avatarRepository.findAll(PageRequest.of(page, count));
     }
 }
